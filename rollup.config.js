@@ -4,6 +4,7 @@ import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import dts from "rollup-plugin-dts";
 import { terser } from "rollup-plugin-terser";
+import serve from 'rollup-plugin-serve';
 
 export default [
   // Main build
@@ -27,7 +28,17 @@ export default [
         sourcemap: true,
       },
     ],
-    plugins: [resolve(), commonjs(), typescript(), terser()],
+    plugins: [
+      resolve(),
+      commonjs(),
+      typescript(),
+      terser(),
+      serve({
+        open: true, // auto-open browser
+        contentBase: ["dist", "src"], // folders to serve
+        port: 3000, // your desired port
+      }),
+    ],
   },
   // Type definitions
   {
